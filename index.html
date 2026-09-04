@@ -1,1107 +1,809 @@
-<!doctype html>
-<html lang="gu">
-
+<!DOCTYPE html>
+<html lang="gu" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GSC Valod – Green Initiative – Tree Info</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;600;700&family=Noto+Serif+Gujarati:wght@700&display=swap"
-    rel="stylesheet" />
+  <title>GSC Valod — Green Initiative Botanical Registry</title>
+
+  <!-- Tailwind CSS & Google Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            leaf: {
+              50: '#F2F9F3',
+              100: '#DFF5E1',
+              500: '#4A9A30',
+              700: '#2D7A1E',
+              900: '#1E5C0F',
+            },
+            accent: {
+              gold: '#D4AF37',
+              goldLight: '#FFD700',
+              earth: '#6B5A4A',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans Gujarati"', 'sans-serif'],
+            gujarati: ['"Noto Sans Gujarati"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    /* ─────────────────────────────
-         RESET & CSS CUSTOM PROPERTIES
-         ───────────────────────────── */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --maroon: #5c0a0a;
-      --maroon2: #7a1212;
-      --gold: #d4a017;
-      --gold2: #ffd700;
-      --forest: #1e5c0f;
-      --leaf: #2d7a1e;
-      --leafl: #4a9a30;
-      --cream: #fdf6e3;
-      --cream2: #f5ead0;
-      --text: #2a2a1e;
-      --textl: #5a5a45;
-      --shadow: 0 2px 16px rgba(0, 0, 0, 0.10);
-    }
-
     body {
-      font-family: "Noto Sans Gujarati", "Arial Unicode MS", sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      line-height: 1.75;
-      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans Gujarati', sans-serif;
+      background-color: #F8FAF7;
+      color: #1E2922;
+      overflow-x: hidden;
     }
 
-    /* ─────────────
-         HEADER BLOCK
-         ───────────── */
-    .hdr {
-      background: linear-gradient(160deg, #4a0808, #7a1212 50%, #5c0a0a);
-      color: #fff;
-      text-align: center;
-      padding: 18px 20px 20px;
-      border-bottom: 3px solid var(--gold);
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 10px 30px -5px rgba(20, 36, 27, 0.05), 0 4px 12px -2px rgba(20, 36, 27, 0.03);
     }
 
-    .hdr h1 {
-      font-size: clamp(14px, 3.5vw, 20px);
-      font-weight: 700;
-      color: var(--gold2);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      font-family: "Noto Serif Gujarati", serif;
+    .glass-header {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
     }
 
-    .hdr p {
-      font-size: 12px;
-      color: #f0d0d0;
-      margin-top: 5px;
+    .glass-pill {
+      background: rgba(240, 248, 242, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(74, 154, 48, 0.2);
     }
 
-    /* ─────────────────────────────────────────────────
-         LOGO ROW
-         – Removed broken #NSS / #NCC / #SAPT / #CAWA IDs.
-         – One flex container; each logo wrapped in <a>.
-         ───────────────────────────────────────────────── */
-    .hdr-logos {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 20px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .logo-link {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .hdr-logo-img {
-      height: 68px;
-      width: auto;
-      object-fit: contain;
-      /* smooth hover transition */
-      transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
-    }
-
-    .logo-link:hover .hdr-logo-img {
-      transform: scale(1.12);
-      filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.40));
-    }
-
-    .logo-link:active .hdr-logo-img {
-      transform: scale(1.04);
-    }
-
-    .logo-label {
-      font-size: 9.5px;
-      color: var(--gold2);
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-    }
-
-    /* ─────────
-         TAB BAR
-         ───────── */
-    .tabs {
-      display: flex;
-      background: var(--forest);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 3px solid var(--gold);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.20);
-    }
-
-    .tab {
-      flex: 1;
-      padding: 12px 8px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      color: rgba(255, 255, 255, 0.65);
-      font-size: clamp(12px, 2.5vw, 14px);
-      font-weight: 700;
-      font-family: "Noto Sans Gujarati", sans-serif;
-      border-bottom: 4px solid transparent;
-      transition: all 0.3s;
-      line-height: 1.4;
-    }
-
-    .tab.active {
-      color: var(--gold2);
-      border-bottom: 4px solid var(--gold2);
-      background: rgba(255, 215, 0, 0.08);
-    }
-
-    .tab:hover:not(.active) {
-      background: rgba(255, 255, 255, 0.07);
-      color: rgba(255, 255, 255, 0.90);
-    }
-
-    /* ────────────────
-         LAYOUT / PANELS
-         ──────────────── */
-    .wrap {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 22px 15px 40px;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    /* ─────────────
-         PLANT TITLE
-         ───────────── */
-    .ptitle {
-      text-align: center;
-      padding: 20px 0 16px;
-    }
-
-    .gname {
-      font-family: "Noto Serif Gujarati", serif;
-      font-size: clamp(28px, 7vw, 46px);
-      font-weight: 700;
-      color: var(--maroon);
-      line-height: 1.2;
-    }
-
-    .ename {
-      font-size: clamp(13px, 3vw, 15px);
-      color: var(--leaf);
-      font-weight: 700;
-      margin-top: 5px;
-    }
-
-    .sname {
-      font-size: clamp(12px, 2.5vw, 14px);
-      color: var(--textl);
-      font-style: italic;
-      margin-top: 3px;
-    }
-
-    .fbadge {
-      display: inline-block;
-      background: var(--cream2);
-      border: 1.5px solid var(--gold);
-      border-radius: 20px;
-      padding: 3px 14px;
-      font-size: 11px;
-      color: var(--maroon);
-      font-weight: 700;
-      margin-top: 7px;
-    }
-
-    .divider {
-      height: 2px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      max-width: 340px;
-      margin: 13px auto;
+    .equalizer-bar {
+      width: 3px;
+      background-color: currentColor;
       border-radius: 2px;
+      animation: equalize 0.8s ease-in-out infinite alternate;
+    }
+    .equalizer-bar:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+    .equalizer-bar:nth-child(2) { height: 14px; animation-delay: 0.3s; }
+    .equalizer-bar:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+    .equalizer-bar:nth-child(4) { height: 16px; animation-delay: 0.4s; }
+
+    @keyframes equalize {
+      0% { height: 4px; }
+      100% { height: 18px; }
     }
 
-    /* ───────────
-         INFO GRID
-         ─────────── */
-    .igrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin: 16px 0;
+    .paused .equalizer-bar {
+      animation: none !important;
+      height: 4px !important;
     }
 
-    @media (max-width: 520px) {
-      .igrid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .icard {
-      background: #fff;
-      border-radius: 12px;
-      padding: 11px 13px;
-      box-shadow: var(--shadow);
-      border-top: 3px solid var(--leaf);
-      transition: transform 0.2s;
-    }
-
-    .icard:hover {
-      transform: translateY(-2px);
-    }
-
-    .ilabel {
-      font-size: 9.5px;
-      color: var(--textl);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      margin-bottom: 4px;
-    }
-
-    .ivalue {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.4;
-    }
-
-    .ivalue em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--textl);
-      font-size: 11.5px;
-    }
-
-    /* ─────────────────
-         CONTENT SECTIONS
-         ───────────────── */
-    .sec {
-      background: #fff;
-      border-radius: 16px;
-      padding: 18px 20px;
-      margin: 13px 0;
-      box-shadow: var(--shadow);
-      border-left: 5px solid var(--leaf);
-    }
-
-    .sec.cult {
-      border-left-color: var(--gold);
-    }
-
-    .sec.fun {
-      background: linear-gradient(135deg, #fffde7, #fff9e0);
-      border-left-color: var(--gold);
-    }
-
-    .shead {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-size: clamp(14px, 3vw, 16px);
-      font-weight: 700;
-      color: var(--maroon);
-      border-bottom: 2px dashed #ede5cc;
-      padding-bottom: 10px;
-      margin-bottom: 13px;
-    }
-
-    .shead .ico {
-      font-size: 21px;
-      flex-shrink: 0;
-    }
-
-    /* ──────────────
-         BULLET LISTS
-         ────────────── */
-    .blist {
-      list-style: none;
-      padding: 0;
-    }
-
-    .blist li {
-      padding: 7px 0;
-      border-bottom: 1px solid #f4f0e4;
-      font-size: clamp(13px, 2.5vw, 14px);
-      color: #3a3a28;
-      display: flex;
-      gap: 9px;
-      align-items: flex-start;
-      line-height: 1.75;
-    }
-
-    .blist li:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .bico {
-      flex-shrink: 0;
-      font-size: 14px;
-      margin-top: 2px;
-    }
-
-    strong {
-      color: var(--maroon);
-    }
-
-    /* ──────────────
-         BADGE PILLS
-         ────────────── */
-    .cpill {
-      display: inline-block;
-      background: #e8f5e9;
-      border: 1px solid #81c784;
-      border-radius: 6px;
-      padding: 1px 8px;
-      font-weight: 700;
-      color: #1b5e20;
-      font-size: 12px;
-    }
-
-    .wpill {
-      display: inline-block;
-      background: #fff3e0;
-      border: 1px solid #ffb74d;
-      border-radius: 6px;
-      padding: 1px 8px;
-      font-weight: 700;
-      color: #e65100;
-      font-size: 12px;
-    }
-
-    /* ──────────────
-         FUN FACT ITEMS
-         ────────────── */
-    .ff-item {
-      background: rgba(255, 215, 0, 0.10);
-      border: 1.5px solid var(--gold);
-      border-radius: 10px;
-      padding: 11px 14px;
-      margin-bottom: 10px;
-      font-size: clamp(13px, 2.5vw, 14px);
-      color: #5d4a00;
-      display: flex;
-      gap: 9px;
-      align-items: flex-start;
-      line-height: 1.75;
-    }
-
-    .ff-item:last-child {
-      margin-bottom: 0;
-    }
-
-    /* ───────────────────────────────────────────────
-         LOCATION BOX + CLICKABLE QR IMAGES
-         – loc-link wraps the <img>; hover = scale + glow
-         ─────────────────────────────────────────────── */
-    .locbox {
-      background: #f0fff4;
-      border: 1.5px solid var(--leafl);
-      border-radius: 10px;
-      padding: 12px 15px;
-      margin: 8px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13.5px;
-      color: var(--forest);
-      line-height: 1.6;
-      flex-wrap: wrap;
-    }
-
-    .loc-content {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    /* the clickable <a> around the QR image */
-    .loc-link {
-      display: inline-block;
-      border-radius: 8px;
-      overflow: hidden;
-      line-height: 0;
-      /* remove phantom gap below img */
-      transition: transform 0.3s ease,
-        filter 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-
-    .loc-link:hover {
-      transform: scale(1.08);
-      filter: drop-shadow(0 0 10px rgba(46, 154, 48, 0.55));
-      box-shadow: 0 0 0 2px var(--leafl);
-      border-radius: 8px;
-    }
-
-    .loc-link:active {
-      transform: scale(0.97);
-    }
-
-    .loc-qr {
-      height: 100px;
-      width: auto;
-      display: block;
-      border-radius: 6px;
-      border: 2px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-
-    .loc-link:hover .loc-qr {
-      border-color: var(--leafl);
-    }
-
-    .loc-maps-hint {
-      font-size: 10px;
-      color: var(--leaf);
-      font-weight: 600;
-      display: block;
-      margin-top: 4px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .loc-link:hover+.loc-maps-hint,
-    .loc-link:focus+.loc-maps-hint {
-      opacity: 1;
-    }
-
-    /* ─────────────────
-         GOOGLE SEARCH CTA
-         ───────────────── */
-    .glcard {
-      background: linear-gradient(135deg, var(--maroon), var(--maroon2));
-      border-radius: 16px;
-      padding: 20px;
-      margin: 15px 0;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(92, 10, 10, 0.30);
-    }
-
-    .glcard p {
-      color: var(--gold2);
-      font-weight: 700;
-      font-size: clamp(13px, 3vw, 15px);
-      margin-bottom: 13px;
-      line-height: 1.5;
-    }
-
-    .gbtn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--gold2);
-      color: var(--maroon);
-      text-decoration: none;
-      padding: 10px 26px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 13.5px;
-      font-family: "Noto Sans Gujarati", sans-serif;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.20);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .gbtn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    }
-
-    /* ────────
-         FOOTER
-         ──────── */
-    .footer {
-      background: var(--maroon);
-      color: #ccc;
-      text-align: center;
-      padding: 15px 20px;
-      font-size: 12px;
-      margin-top: 30px;
-      border-top: 3px solid var(--gold);
-    }
-
-    .footer span {
-      color: var(--gold2);
-      font-weight: 600;
-    }
-
-    /* ─────────────────────────────
-         RESPONSIVE TWEAKS (≤ 420 px)
-         ───────────────────────────── */
-    @media (max-width: 420px) {
-      .hdr-logos {
-        gap: 14px;
-      }
-
-      .hdr-logo-img {
-        height: 54px;
-      }
-
-      .locbox {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .loc-content {
-        gap: 10px;
-      }
+    .ambient-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      z-index: -1;
+      opacity: 0.45;
+      pointer-events: none;
     }
   </style>
 </head>
 
-<body>
+<body class="min-h-screen relative selection:bg-leaf-500 selection:text-white">
 
-  <!-- ══════════════════════════════════════════
-         HEADER  —  College name + clickable logos
-         ════════════════════════════════════════ -->
-  <div class="hdr">
-    <h1>🌿 Government Science College, Valod 🌿</h1>
-    <p>Green Initiative | NSS – Eco Club | NCC | Saptadhara | Cawach</p>
+  <!-- Ambient Blobs -->
+  <div class="ambient-blob w-96 h-96 bg-emerald-200 top-[-50px] left-[-100px]"></div>
+  <div class="ambient-blob w-[30rem] h-[30rem] bg-amber-100 top-[20%] right-[-150px]"></div>
+  <div class="ambient-blob w-96 h-96 bg-green-200 bottom-[10%] left-[10%]"></div>
 
-    <div class="hdr-logos">
+  <!-- STICKY GLASS HEADER -->
+  <header class="sticky top-0 z-50 glass-header px-4 py-3 sm:py-4 transition-all shadow-sm">
+    <div class="max-w-2xl mx-auto flex flex-col items-center text-center">
+      
+    <!--   <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-leaf-900 text-[11px] font-bold tracking-wider uppercase mb-1.5 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Green Campus Initiative
+      </div> -->
+	  
+      <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-leaf-900 uppercase">
+        Government Science College, Valod
+      </h1>
+      <p class="text-[11.5px] font-medium text-accent-earth">NSS – Eco Club &bull; NCC &bull; Saptadhara &bull; Cawach</p>
 
-      <!-- NSS -->
-      <a href="https://nss.gov.in/" target="_blank" title="National Service Scheme (NSS)" class="logo-link">
-        <img src="NSS_(National_Service_Scheme)_logo.png" alt="NSS Logo" class="hdr-logo-img" />
-        <span class="logo-label">NSS</span>
-      </a>
-
-      <!-- NCC -->
-      <a href="https://indiancc.mygov.in/" target="_blank" title="National Cadet Corps (NCC)" class="logo-link">
-        <img src="NCC_Emblem_of_National_Cadet_Corps_(India).png" alt="NCC Logo" class="hdr-logo-img" />
-        <span class="logo-label">NCC</span>
-      </a>
-
-      <!-- SAPTADHARA -->
-      <a href="https://gcert.gujarat.gov.in/" target="_blank" title="Saptadhara – GCERT Gujarat" class="logo-link">
-        <img src="SAPTADHARA LOGO.png" alt="Saptadhara Logo" class="hdr-logo-img" />
-        <span class="logo-label">SAPTADHARA</span>
-      </a>
-
-      <!-- CAWACH -->
-      <a href="https://cawach.gujgov.edu.in" target="_blank" title="CAWACH Kendra – Education Dept, Govt of Gujarat"
-        class="logo-link">
-        <img src="CAWACH .png" alt="CAWACH Logo" class="hdr-logo-img" />
-        <span class="logo-label">CAWACH</span>
-      </a>
-
-    </div>
-  </div>
-  <!-- /hdr -->
-
-  <!-- ════════════════════
-         STICKY TAB SWITCHER
-         ════════════════════ -->
-  <div class="tabs">
-    <button class="tab active" onclick="show('p1', this)">
-      🌿 અરડૂસી<br />
-      <span style="font-weight: 400; font-size: 10.5px">Justicia adhatoda</span>
-    </button>
-    <button class="tab" onclick="show('p2', this)">
-      🌸 આંકડો<br />
-      <span style="font-weight: 400; font-size: 10.5px">Calotropis gigantea</span>
-    </button>
-  </div>
-
-  <!-- ══════════════
-         MAIN CONTENT
-         ══════════════ -->
-  <div class="wrap">
-
-    <!-- ═══════════════════════════════════════════════
-           PANEL 1  —  અરડૂસી  (Justicia adhatoda)
-           ═══════════════════════════════════════════════ -->
-    <div id="p1" class="panel active">
-
-      <!-- Title block -->
-      <div class="ptitle">
-        <div class="gname">અરડૂસી</div>
-        <div class="ename">Malabar Nut / Adhatoda / Vasaka</div>
-        <div class="sname">
-          <em>Justicia adhatoda</em> (syn. <em>Adhatoda vasica</em>)
-        </div>
-        <div class="fbadge">Family: Acanthaceae</div>
-        <div class="divider"></div>
-      </div>
-
-      <!-- Quick-info grid -->
-      <div class="igrid">
-        <div class="icard">
-          <div class="ilabel">🏷️ સામાન્ય નામ</div>
-          <div class="ivalue">અરડૂસી / વાસક</div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🔬 વૈજ્ઞાનિક નામ</div>
-          <div class="ivalue"><em>Justicia adhatoda</em></div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌿 કુટુંબ</div>
-          <div class="ivalue">Acanthaceae</div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌱 ઝાડ / ઝાડી પ્રકાર</div>
-          <div class="ivalue">
-            સદાહરિત ઝાડી<br /><em>(Evergreen Shrub)</em>
-          </div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌍 મૂળ નિવાસ</div>
-          <div class="ivalue">ભારત, શ્રીલંકા, નેપાળ</div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌸 ફૂલ</div>
-          <div class="ivalue">ફેબ્રુઆરી – એપ્રિલ</div>
-        </div>
-      </div>
-
-      <!-- Description -->
-      <div class="sec">
-        <div class="shead">
-          <span class="ico">📖</span><span>વિગતવાર વર્ણન</span>
-        </div>
-        <ul class="blist">
-          <li>
-            <span class="bico">🌿</span>
-            <span>અરડૂસી <strong>૧ – ૨.૫ મીટર ઊંચી</strong>, ઘટ્ટ શાખાઓ ધરાવતી,
-              <strong>સદાહરિત ઝાડી (Evergreen Shrub)</strong> છે — આખું વર્ષ લીલી રહે છે.</span>
-          </li>
-          <li>
-            <span class="bico">🪵</span>
-            <span><strong>દાંડો (Stem):</strong> ટટ્ટારો, ભૂ-ખાખી-લીલો; નીચેથી
-              <strong>કાઠ (Woody)</strong> ને ઉપરથી ઘાસ-સ્વભાવ (Herbaceous).
-              ડાળ-ઓ ઉપર ઘટ્ટ ગ્રંથ-ઓ (Nodes) હોય છે.</span>
-          </li>
-          <li>
-            <span class="bico">🍃</span>
-            <span><strong>પાંદડા (Leaves):</strong> ભાલા-આકારનાં (Lanceolate),
-              <strong>૧૦–૧૫ સે.મી. લાંબાં</strong>, ઘેરા-લીલા ને ઉપર ચળકતાં —
-              <strong>ઘણાં કડવાં (Intensely Bitter)</strong>; ઢોર-બકરા-ઘોડા પણ ખાવાનું ટાળે છે.</span>
-          </li>
-          <li>
-            <span class="bico">🌼</span>
-            <span><strong>ફૂલ (Flowers):</strong> <strong>સફેદ</strong> રંગનાં,
-              નીચલી ઓઠ ઉપર <strong>જાંબલી નસો (Purple Veins)</strong>; ઘટ્ટ
-              Axillary Spike-ઓ (ઝૂડ)માં ઊગે છે — <strong>બે-ઓઠ (Bilabiate)</strong>
-              આકાર — Acanthaceae-ની ઓળખ.</span>
-          </li>
-          <li>
-            <span class="bico">🌾</span>
-            <span><strong>ફળ (Fruit):</strong> Club-આકારું Capsule,
-              <strong>૨–૪ બીજ</strong> ધરાવે છે. ફળ પાક્યા પછી ફૂટે ત્યારે બીજ ઉડી જાય.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Ecological Role -->
-      <div class="sec">
-        <div class="shead">
-          <span class="ico">🌍</span><span>પર્યાવરણીય ભૂમિકા</span>
-        </div>
-        <ul class="blist">
-          <li>
-            <span class="bico">☀️</span>
-            <span><strong>ઓક્સિજન ઉત્પાદન:</strong> ઘટ્ટ પર્ણ-સમૂહ (Foliage)
-              ઓક્સિજન ઉત્પન્ન કરે; CO₂ ઘટાડવામાં ફાળો —
-              <strong>કૅમ્પસ-ની હવા સ્વચ્છ</strong> રહે.</span>
-          </li>
-          <li>
-            <span class="bico">🐦</span>
-            <span><strong>જૈવ-વૈવિધ્ય (Biodiversity):</strong> ઘટ્ટ ઝાડી
-              <strong>પક્ષીઓ ને નાના પ્રાણીઓ</strong> માટે માળો (Nesting) ને આશ્રય (Shelter) આપે છે.</span>
-          </li>
-          <li>
-            <span class="bico">🐝</span>
-            <span><strong>પરાગ-નયન (Pollination):</strong> ફૂલ
-              <strong>ભ્રમર (Bees) ને પતંગિયાં (Butterflies)</strong> ને
-              આકર્ષે — Campus-ના Pollinators ટકી રહે.</span>
-          </li>
-          <li>
-            <span class="bico">🌱</span>
-            <span><strong>ભૂ-ક્ષરણ-નિવારણ (Soil Erosion Prevention):</strong>
-              ઊંડા ઘટ્ટ મૂળ (Root System)
-              <strong>જમીન-ધોવાણ (Erosion)</strong> અટકાવે — ઢોળાવ-ઓ (Slopes) ઉપર ઉપકારી.</span>
-          </li>
-          <li>
-            <span class="bico">💧</span>
-            <span><strong>દુષ્કાળ-સહન (Drought Resistance):</strong> ઓછાં પાણી ને
-              ગરીબ જમીનમાં પણ સારી રીતે ઊગે —
-              <strong>ઓછી સિંચાઈ-ક્ષેત્ર</strong>-ઓ માટે ઉત્તમ.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Medicinal & Cultural -->
-      <div class="sec cult">
-        <div class="shead">
-          <span class="ico">💊</span><span>ઔષધીય અને સાંસ્કૃતિક મહત્વ</span>
-        </div>
-        <ul class="blist">
-          <li>
-            <span class="bico">🧪</span>
-            <span><strong>સક્રિય ઘટક:</strong>
-              <span class="cpill">Vasicine</span> — ક્વિનઝોલીન-Alkaloid. આ ઘટક
-              <strong>શ્વાસ-નળી (Bronchial Tubes) ખોલે</strong> — Powerful Bronchodilator.</span>
-          </li>
-          <li>
-            <span class="bico">🩺</span>
-            <span><strong>Ayurvedic ઉપચાર:</strong>
-              <strong>ઉધરસ (Cough), દમ (Asthma), શ્વાસ-નળી-સોજ (Bronchitis)</strong>
-              — ૩,૦૦૦+ વર્ષ-થી આ ઝાડી-નો ઉકાળો (Decoction) Ayurvedic First-Choice ઉપચાર.</span>
-          </li>
-          <li>
-            <span class="bico">🫁</span>
-            <span><strong>ક્ષય-રોગ (Tuberculosis / TB):</strong> ક્ષય-ની ઉધરસ
-              ઘટાડવા ઉકાળો — પ્રાચીન ગ્રંથ <em>Charaka Samhita</em>-માં
-              <strong>"Vasa"</strong> (= અરડૂસી)-નો ઉલ્લેખ.</span>
-          </li>
-          <li>
-            <span class="bico">🌡️</span>
-            <span><strong>જ્વર-શામક:</strong> પાંદડા-નો રસ (Leaf Juice)
-              <strong>તાવ (Fever) ઘટાડવા</strong> — Wound Healing —
-              Anti-Inflammatory — Anti-Bacterial ઉપચાર-ઓ-માં.</span>
-          </li>
-          <li>
-            <span class="bico">🏺</span>
-            <span><strong>પ્રાચીન ગ્રંથ:</strong>
-              <em>Charaka Samhita, Sushruta Samhita</em> ને
-              <em>Ashtanga Hridayam</em> — ત્રણ Ayurvedic ગ્રંથ-ઓ-માં
-              <strong>Vasa</strong> (અરડૂસી)-નો ઉલ્લેખ — ૩,૦૦૦+ વર્ષ-ની ઔષધ-પ્રણાલી.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Fun Facts -->
-      <div class="sec fun">
-        <div class="shead">
-          <span class="ico">🌟</span><span>રસપ્રદ તથ્ય</span>
-        </div>
-        <div class="ff-item">
-          <span style="font-size: 20px; flex-shrink: 0">💊</span>
-          <span>
-            <strong>Modern Medicine Connection!</strong> — અરડૂસી-ના
-            <span class="cpill">Vasicine</span> Alkaloid-ને Lab-માં Study કરી
-            <strong>Bromhexine Drug</strong> Develop કરવામાં આવ્યો — આ Bromhexine
-            <em>આજે વિશ્વ-ભરની ઉધરસ Cough Syrups-ઓ-માં</em> Active Ingredient!<br />
-            One jungle shrub → Worldwide pharmaceutical medicine.
-          </span>
-        </div>
-        <div class="ff-item">
-          <span style="font-size: 20px; flex-shrink: 0">🐐</span>
-          <span>
-            <strong>નામ-ની ઉત્પત્તિ:</strong>
-            <strong>"Adhatoda"</strong> Tamil <em>"Aadhu-thoondai"</em> =
-            <em>"<strong>Goat-ઓ ખાતા નથી</strong>"</em>. Alkaloids-ના Bitter Taste —
-            even animals botanically avoid it! Charaka Samhita — 3,000 years old reference.
-          </span>
-        </div>
-      </div>
-
-      <!-- Campus Location  (Topic 1 — href="#" placeholder) -->
-      <div class="sec">
-        <div class="shead">
-          <span class="ico">📍</span><span>કૅમ્પસ સ્થાન</span>
-        </div>
-
-        <div class="locbox">
-          <span>📍</span>
-          <div class="loc-content">
-            <strong>Location 1</strong>
-            <a href="https://www.google.com/maps/place//@21.0520159,73.2473422,62m/data=!3m1!1e3!4m6!1m5!3m4!2zMjHCsDAzJzA3LjAiTiA3M8KwMTQnNTAuNiJF!8m2!3d21.051948!4d73.247395!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" title="Click to open in Google Maps" class="loc-link">
-              <img src="Topic_2_Loc_1.png" alt="Location 1 QR Code" class="loc-qr" />
-            </a>
-          </div>
-        </div>
-
-        <div class="locbox">
-          <span>📍</span>
-          <div class="loc-content">
-            <strong>Location 2</strong>
-            <a href="https://www.google.com/maps/place/21%C2%B003'07.5%22N+73%C2%B014'48.8%22E/@21.052071,73.24688,667m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d21.052071!4d73.24688!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDgyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" title="Click to open in Google Maps" class="loc-link">
-              <img src="Topic_2_Loc_2.png" alt="Location 2 QR Code" class="loc-qr" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Google Search -->
-      <div class="glcard">
-        <p>🔎 વધુ માહિતી માટે Google Search Click કરો</p>
-        <a class="gbtn"
-          href="https://www.google.com/search?q=Justicia+adhatoda+tree+information+in+Gujarati"
-          target="_blank">
-          🔍 Google Search — અરડૂસી / Justicia adhatoda
+      <!-- Institutional Logos -->
+      <div class="flex items-center justify-center gap-4 sm:gap-6 mt-3 pt-2 border-t border-emerald-900/10 w-full">
+        <a href="https://nss.gov.in/" target="_blank" class="group flex flex-col items-center transition transform hover:scale-105">
+          <img src="NSS_logo.png" alt="NSS" class="h-9 sm:h-11 w-auto object-contain drop-shadow-sm">
+          <span class="text-[9px] font-bold text-leaf-900 tracking-wider mt-1 group-hover:text-emerald-700">NSS</span>
+        </a>
+        <a href="https://indiancc.mygov.in/" target="_blank" class="group flex flex-col items-center transition transform hover:scale-105">
+          <img src="NCC_logo.png" alt="NCC" class="h-9 sm:h-11 w-auto object-contain drop-shadow-sm">
+          <span class="text-[9px] font-bold text-leaf-900 tracking-wider mt-1 group-hover:text-emerald-700">NCC</span>
+        </a>
+        <a href="https://gcert.gujarat.gov.in/" target="_blank" class="group flex flex-col items-center transition transform hover:scale-105">
+          <img src="Saptadhara_logo.png" alt="Saptadhara" class="h-9 sm:h-11 w-auto object-contain drop-shadow-sm">
+          <span class="text-[9px] font-bold text-leaf-900 tracking-wider mt-1 group-hover:text-emerald-700">SAPTADHARA</span>
+        </a>
+        <a href="https://cawach.gujgov.edu.in" target="_blank" class="group flex flex-col items-center transition transform hover:scale-105">
+          <img src="Cawach_logo.png" alt="CAWACH" class="h-9 sm:h-11 w-auto object-contain drop-shadow-sm">
+          <span class="text-[9px] font-bold text-leaf-900 tracking-wider mt-1 group-hover:text-emerald-700">CAWACH</span>
         </a>
       </div>
 
     </div>
-    <!-- /p1 -->
+  </header>
 
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-2xl mx-auto px-4 py-6 sm:py-8 space-y-6">
 
-    <!-- ═══════════════════════════════════════════════
-           PANEL 2  —  આંકડો  (Calotropis gigantea)
-           ═══════════════════════════════════════════════ -->
-    <div id="p2" class="panel">
-
-      <!-- Title block -->
-      <div class="ptitle">
-        <div class="gname">આંકડો</div>
-        <div class="ename">Crown Flower / Giant Milkweed / Madar</div>
-        <div class="sname"><em>Calotropis gigantea</em></div>
-        <div class="fbadge">Family: Asclepidaceae</div>
-        <div class="divider"></div>
-      </div>
-
-      <!-- Quick-info grid -->
-      <div class="igrid">
-        <div class="icard">
-          <div class="ilabel">🏷️ સામાન્ય નામ</div>
-          <div class="ivalue">આંકડો / Madar / Arka</div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🔬 વૈજ્ઞાનિક નામ</div>
-          <div class="ivalue"><em>Calotropis gigantea</em></div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌿 કુટુંબ</div>
-          <div class="ivalue">Asclepidaceae</div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌱 ઝાડ / ઝાડી પ્રકાર</div>
-          <div class="ivalue">મોટી ઝાડી<br /><em>(Large Shrub)</em></div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌍 મૂળ નિવાસ</div>
-          <div class="ivalue">ભારત, દ.પૂ. એશિયા, ચીન</div>
-        </div>
-        <div class="icard">
-          <div class="ilabel">🌸 ફૂલ</div>
-          <div class="ivalue">સર્વ ઋતુ (Year-Round)</div>
-        </div>
-      </div>
-
-      <!-- Description -->
-      <div class="sec">
-        <div class="shead">
-          <span class="ico">📖</span><span>વિગતવાર વર્ણન</span>
-        </div>
-        <ul class="blist">
-          <li>
-            <span class="bico">🌿</span>
-            <span>આંકડો <strong>૨ – ૪ મીટર ઊંચી</strong>, ઝડપ-ભૂ ઊગતી,
-              <strong>મોટી ઝાડી (Large Shrub)</strong> છે.</span>
-          </li>
-          <li>
-            <span class="bico">🪵</span>
-            <span><strong>દાંડો (Stem):</strong> ઊભો — જ્યારે
-              <strong>નવો (Young)</strong> ત્યારે
-              <strong>White Woolly Coating (Tomentum)</strong> ઢઢ. Grow = Grey-White Bark.
-              <strong>Throughout Plant: સફેદ White Milky Latex (ક્ષીરરસ / Dudhi-yah Ras)</strong>
-              — Toxic but Medicinally Important.</span>
-          </li>
-          <li>
-            <span class="bico">🍃</span>
-            <span><strong>પાંદડા (Leaves):</strong>
-              <strong>મોટા, Oval-Oblong</strong>, <strong>૮–૨૦ સે.મી.</strong>
-              — Silvery-Green — Base Clasping (Sub-Sessile) — Woolly White Coating.</span>
-          </li>
-          <li>
-            <span class="bico">🌸</span>
-            <span><strong>ફૂલ (Flowers):</strong>
-              <strong>ફિક્કા-જાંબલા (Pale Purple) / White</strong> —
-              <strong>Crown-Like Corona</strong> — 5-Pointed Star-Shape — Waxy — year-round blooms.</span>
-          </li>
-          <li>
-            <span class="bico">🌾</span>
-            <span><strong>ફળ (Fruit):</strong>
-              <strong>Inflated Follicle / Pod</strong> — Large Green Pod;
-              <strong>બીજ-ઓ ઉપર Silky White Fibers (Coma)</strong> — Wind-Spread.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Ecological Role -->
-      <div class="sec">
-        <div class="shead">
-          <span class="ico">🌍</span><span>પર્યાવરણીય ભૂમિકા</span>
-        </div>
-        <ul class="blist">
-          <li>
-            <span class="bico">🦋</span>
-            <span><strong>Butterfly Host Plant:</strong>
-              <strong>Plain Tiger Butterfly (Danaus chrysippus)</strong> —
-              Larvae-ઓ <strong>Exclusive</strong> Host Plant — Without Aankdo → No Plain Tiger Butterfly on
-              Campus!</span>
-          </li>
-          <li>
-            <span class="bico">🐝</span>
-            <span><strong>Pollinator Support:</strong> ભ્રમર (Bees), Wasps, Ants
-              — Special Nectar Structure — Campus Biodiversity ↑.</span>
-          </li>
-          <li>
-            <span class="bico">🏜️</span>
-            <span><strong>Pioneer Plant:</strong> Degraded, Waste, Sandy — Barren
-              Land-ઓ <strong>First Colonize</strong> — Kharā Land Reclaim.</span>
-          </li>
-          <li>
-            <span class="bico">🌱</span>
-            <span><strong>Soil Stabilization:</strong> Sandy, Poor Soil Roots —
-              Prevent Erosion in Harsh Zones.</span>
-          </li>
-          <li>
-            <span class="bico">☀️</span>
-            <span><strong>Extreme Survivor:</strong> Drought, Salt, Poor Soil —
-              All Survive — Perfect Campus Greenery where Other Plants Fail.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Medicinal & Cultural -->
-      <div class="sec cult">
-        <div class="shead">
-          <span class="ico">💊</span><span>ઔષધીય અને સાંસ્કૃતિક મહત્વ</span>
-        </div>
-        <ul class="blist">
-          <li>
-            <span class="bico">🧪</span>
-            <span><strong>Active Compounds:</strong>
-              <span class="cpill">Calotropin</span>
-              <span class="cpill">Calactin</span>
-              <span class="cpill">Uzarigenin</span> — Cardenolide Group
-              (Cardiac Glycosides) — Powerful Medicinal; Small Dose = Medicine, Large Dose = Toxic.</span>
-          </li>
-          <li>
-            <span class="bico">🩺</span>
-            <span><strong>Root Bark:</strong> Skin Diseases ―
-              Leprosy (Kuṣṭha-Roga) ― Ayurvedic Traditional Treatment.
-              Also: Elephantiasis (Filariasis).</span>
-          </li>
-          <li>
-            <span class="bico">🦷</span>
-            <span><strong>Dental Use:</strong> Dried Latex — Small Amount —
-              Toothache (Daṃt-Śūḷ) Traditional Relief.
-              <span class="wpill">⚠ Toxic if Misused</span></span>
-          </li>
-          <li>
-            <span class="bico">🕉️</span>
-            <span><strong>Religious Significance:</strong>
-              <strong>Bhagavan Shiva-ઘ Priya</strong> — Aankdo-nā Phūla —
-              Shivratri — Monday Offered.
-              Sanskrit: <strong>"Arka"</strong> = Sun — Vedic Tradition — Solar Energy Connection.</span>
-          </li>
-          <li>
-            <span class="bico">🌿</span>
-            <span><strong>Anti-Inflammatory:</strong> Leaves ― Joints Pain
-              (Rheumatism) ― Inflammation ― Traditional Ayurvedic Compress.
-              Flowers ― Cold / Fever Preparations.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Fun Facts -->
-      <div class="sec fun">
-        <div class="shead">
-          <span class="ico">🌟</span><span>રસપ્રદ તથ્ય</span>
-        </div>
-        <div class="ff-item">
-          <span style="font-size: 20px; flex-shrink: 0">⚓</span>
-          <span>
-            <strong>World War II Connection!</strong> —
-            <strong>WWII (1939–45)</strong> Aankdo-nā Bīja-nā
-            <em>Silky Fibers (Rēśamī Resā)</em> — Kapok Substitute —
-            <strong>Life Jackets &amp; Insulation</strong> Vaparāyā Hatā!<br />
-            One Indian "Weed" → Global War Hero.
-          </span>
-        </div>
-        <div class="ff-item">
-          <span style="font-size: 20px; flex-shrink: 0">👑</span>
-          <span>
-            <strong>TOP 10 Medicinal Plant of India:</strong> Society "Kharabachiyā-ī Jhāḍī" (Weed) oḷakhāy —
-            Traditional Indian Medicine-ઘ-ઉ-ઘ-ઉ
-            <strong>TOP 10 Most Important Medicinal Plants</strong> Sthan Dharāve Che.<br />
-            Never Judge a Plant by Its Location!
-          </span>
-        </div>
-      </div>
-
-      <!-- Campus Location  (Topic 2 — real Google Maps links) -->
-      <div class="sec">
-        <div class="shead">
-          <span class="ico">📍</span><span>કૅમ્પસ સ્થાન</span>
-        </div>
-
-        <div class="locbox">
-          <span>📍</span>
-          <div class="loc-content">
-            <strong>Location 1</strong>
-            <a href="https://www.google.com/maps/place/21%C2%B003'07.5%22N+73%C2%B014'48.8%22E/@21.052071,73.24688,667m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d21.052071!4d73.24688!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDgyNS4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank" title="Click to open in Google Maps" class="loc-link">
-              <img src="Topic_2_Loc_2.png" alt="Location 1 QR Code" class="loc-qr" />
-            </a>
-          </div>
-        </div>
-
-        <div class="locbox">
-          <span>📍</span>
-          <div class="loc-content">
-            <strong>Location 2</strong>
-            <a href="https://www.google.com/maps/place/21%C2%B003'07.5%22N+73%C2%B014'48.8%22E/@21.0519953,73.2465765,228m/data=!3m1!1e3!4m4!3m3!8m2!3d21.052071!4d73.24688!18m1!1e1?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D"
-              target="_blank" title="Click to open in Google Maps" class="loc-link">
-              <img src="Topic_2_Loc_1.png" alt="Location 2 QR Code" class="loc-qr" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Google Search -->
-      <div class="glcard">
-        <p>🔎 વધુ માહિતી માટે Google Search Click કરો</p>
-        <a class="gbtn" href="https://www.google.com/search?q=Calotropis+gigantea+Aankdo+medicinal+uses+in+India+in+Gujarati&sca_esv=899f485c7608c194&biw=511&bih=967&sxsrf=APpeQnsjTRdMrA-AVUrGoZUD4zWQYfr4LQ%3A1787997322047&ei=iqySavfJAqK4nesP76PCyAw&oq=Calotropis+gigantea+Aankdo+medicinal+uses+in+India+in+Gujarati&gs_lp=EhNtb2JpbGUtZ3dzLXdpei1zZXJwIj5DYWxvdHJvcGlzIGdpZ2FudGVhIEFhbmtkbyBtZWRpY2luYWwgdXNlcyBpbiBJbmRpYSBpbiBHdWphcmF0aUi_F1CaEViBFHABeAGQAQCYAZoBoAG4A6oBAzAuM7gBA8gBAPgBAZgCA6ACuALCAgoQABhHGNYEGLADwgIXEC4Y3AYYuAYY2gYY2AIYyAMYsAPYAQHCAgQQHhgKmAMAiAYBkAYLugYECAEYGZIHAzEuMqAHuQeyBwMwLjK4B6YCwgcHMC4yLjAuMcgHEoAIAQ&sclient=mobile-gws-wiz-serp"
-          target="_blank">
-          🔍 Google Search — આંકડો / Calotropis gigantea
-        </a>
-      </div>
-
+    <!-- SEGMENTED SWITCH -->
+    <div class="glass-panel p-1.5 rounded-2xl flex relative shadow-inner">
+      <button onclick="switchTab('topic1', this)" id="tab-btn-1" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-leaf-900 bg-white shadow-md flex items-center justify-center gap-2 transition-all duration-300">
+        <span class="text-base">🌿</span> ૧. ખરસાણી થોર
+      </button>
+      <button onclick="switchTab('topic2', this)" id="tab-btn-2" class="flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-gray-500 hover:text-leaf-900 flex items-center justify-center gap-2 transition-all duration-300">
+        <span class="text-base">🌸</span> ૨. આંકડો
+      </button>
     </div>
-    <!-- /p2 -->
+
+    <!-- ================================================================= -->
+    <!-- TOPIC 1: EUPHORBIA TIRUCALLI -->
+    <!-- ================================================================= -->
+    <article id="panel-topic1" class="space-y-6">
+
+      <!-- Hero Header Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 relative overflow-hidden border-t-4 border-t-emerald-600">
+        <div class="flex items-center justify-between">
+          <span class="px-3 py-1 rounded-full bg-emerald-100/80 text-emerald-800 text-xs font-extrabold tracking-wide inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-droplet-slash text-[10px]"></i> સદાહરિત સુક્યુલન્ટ ઝાડી
+          </span>
+          <span class="text-xs font-semibold text-accent-earth tracking-wide">ID: 01 &bull; Euphorbiaceae</span>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-leaf-900 mt-3 font-gujarati tracking-tight">
+          ખરસાણી થોર <span class="text-lg sm:text-xl font-semibold text-emerald-700 font-sans">(Pencil Cactus)</span>
+        </h2>
+        <p class="text-xs sm:text-sm font-serif italic text-accent-earth mt-1">Euphorbia tirucalli L. &bull; Milk Bush &bull; Petroleum Plant</p>
+
+        <!-- Feature Badges -->
+        <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-emerald-900/10">
+          <span class="px-2.5 py-1 rounded-lg bg-white/70 border border-emerald-900/10 text-[11px] font-bold text-emerald-900">
+            🌱 Zero Water Need
+          </span>
+          <span class="px-2.5 py-1 rounded-lg bg-white/70 border border-emerald-900/10 text-[11px] font-bold text-emerald-900">
+            🛡️ Bio-Fencing Shrub
+          </span>
+          <span class="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 text-[11px] font-bold text-amber-900">
+            ⚠️ Toxic Milky Latex
+          </span>
+        </div>
+      </div>
+<!-- Audio Player Capsule -->
+<div class="glass-panel rounded-2xl p-4 sm:p-5 border-l-4 border-l-accent-gold shadow-sm">
+  <div class="flex items-center justify-between mb-3">
+    <div class="flex items-center gap-3">
+      <!-- Changed text-accent-gold to text-white -->
+      <div class="w-10 h-10 rounded-xl bg-emerald-900 text-white flex items-center justify-center text-sm shadow-md">
+        <i class="fa-solid fa-headphones"></i>
+      </div>
+      <div>
+        <h3 class="text-xs sm:text-sm font-bold text-leaf-900">ઓડિયો માર્ગદર્શિકા / Voice Guide</h3>
+        <p class="text-[11px] text-accent-earth">Natural Narrative Audio Experience</p>
+      </div>
+    </div>
+    <div id="eq-t1" class="flex items-end gap-1 h-5 paused text-emerald-700 px-2">
+      <div class="equalizer-bar"></div>
+      <div class="equalizer-bar"></div>
+      <div class="equalizer-bar"></div>
+      <div class="equalizer-bar"></div>
+    </div>
+  </div>
+  <div class="grid grid-cols-2 gap-2.5">
+    <button onclick="playAudio('topic1_gujarati.m4a', this, 'eq-t1')" class="py-2.5 px-3 rounded-xl bg-leaf-900 hover:bg-emerald-950 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95">
+      <i class="fa-solid fa-play text-[10px]"></i> ગુજરાતી ઓડિયો
+    </button>
+    <button onclick="playAudio('topic1_english.m4a', this, 'eq-t1')" class="py-2.5 px-3 rounded-xl bg-white hover:bg-emerald-50 text-leaf-900 border border-emerald-900/15 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95">
+      <i class="fa-solid fa-play text-[10px]"></i> English Audio
+    </button>
+  </div>
+</div>
+
+      <!-- 1. TAXONOMIC HIERARCHY TABLE -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-emerald-900/15">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-sitemap text-emerald-700"></i> ૧. પ્રાથમિક વર્ગીકરણ વિગતો (Taxonomic Hierarchy)
+        </h3>
+        <div class="overflow-x-auto rounded-2xl border border-emerald-900/10">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-emerald-900/5 text-emerald-950 uppercase font-bold text-[10.5px]">
+              <tr>
+                <th class="p-3 border-b border-emerald-900/10">પ્રમાણભૂત વિગત (Parameter)</th>
+                <th class="p-3 border-b border-emerald-900/10">ગુજરાતી વિગત</th>
+                <th class="p-3 border-b border-emerald-900/10">English Scientific Details</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-emerald-900/5 bg-white/40">
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">સામાન્ય નામ (Common Name)</td>
+                <td class="p-3 text-leaf-900">ખરસાણી થોર, પેન્સિલ થોર</td>
+                <td class="p-3 text-leaf-900">Pencil Cactus, Milk Bush, Petroleum Plant</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">વૈજ્ઞાનિક નામ (Scientific Name)</td>
+                <td class="p-3 font-serif italic text-emerald-800">Euphorbia tirucalli L.</td>
+                <td class="p-3 font-serif italic text-emerald-800">Euphorbia tirucalli L.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">વનસ્પતિ કુટુંબ (Family)</td>
+                <td class="p-3 text-leaf-900">યુફોર્બિએસી (Euphorbiaceae)</td>
+                <td class="p-3 text-leaf-900">Euphorbiaceae (Spurge family)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">છોડ સ્વરૂપ (Plant Habit)</td>
+                <td class="p-3 text-leaf-900">સદાહરિત સુક્યુલન્ટ ઝાડી</td>
+                <td class="p-3 text-leaf-900">Succulent, Arborescent Xerophytic Shrub</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">મૂળ વતન (Native Region)</td>
+                <td class="p-3 text-leaf-900">પૂર્વ અને દક્ષિણ આફ્રિકા</td>
+                <td class="p-3 text-leaf-900">Tropical Eastern & Southern Africa</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">પુષ્પકાળ (Flowering Season)</td>
+                <td class="p-3 text-leaf-900">સપ્ટેમ્બર થી ડિસેમ્બર</td>
+                <td class="p-3 text-leaf-900">September to December</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2. DETAILED BOTANICAL MORPHOLOGY -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-emerald-900/15 space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-2">
+          <i class="fa-solid fa-seedling text-emerald-700"></i> ૨. વિગતવાર વનસ્પતિશાસ્ત્રીય વર્ણન (Botanical Morphology)
+        </h3>
+
+        <!-- Gujarati Description -->
+        <div class="bg-white/60 p-4 rounded-2xl border border-emerald-900/10 space-y-2.5">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-language"></i> ગુજરાતી વર્ણન
+          </span>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>પ્રકાંડ અને ડાળીઓ (Stems):</strong> ૩ થી ૭ મીટર ઊંચો, અત્યંત શાખિત, કાંટા વગરનો સુક્યુલન્ટ ક્ષુપ. તેની નળાકાર, લીલી, પેન્સિલ જેવી ડાળીઓ (Cylindrical Branchlets) ક્લોરોફિલ ધરાવે છે, જેના દ્વારા પાંદડા વગર પણ સમગ્ર પ્રકાશસંશ્લેષણ (Stem Photosynthesis) થાય છે.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>પર્ણો (Leaves):</strong> પર્ણો અતિ સૂક્ષ્મ (૧–૧.૫ સે.મી.), રેખીય અને અલ્પજીવી (Caducous) હોય છે. બાષ્પીભવન રોકવા અને પાણી બચાવવા માટે નવી કૂંપળો ફૂટતાં જ પાંદડા ખરી પડે છે.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>પુષ્પો અને ફળ (Flowers & Fruit):</strong> ડાળીઓના છેડે અલ્પ કદના, પીળાશ પડતા લીલા સાયથિયમ (Cyathium) પ્રકારના પુષ્પગુચ્છ બેસે છે. ફળ ત્રિ-ખંડીય કેપ્સ્યુલ સ્વરૂપનું હોય છે.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>ક્ષીરરસ (Milky Latex):</strong> છોડને ઈજા થતાં પ્રચુર માત્રામાં સફેદ, ઘટ્ટ, દાહક દૂધિયું ક્ષીર વહે છે.
+          </p>
+        </div>
+
+        <!-- English Description -->
+        <div class="bg-emerald-950/[0.03] p-4 rounded-2xl border border-emerald-900/10 space-y-2.5">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
+            <i class="fa-solid fa-globe"></i> English Botanical Morphology
+          </span>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Stem Architecture:</strong> Reaches 3–7 meters; highly branched with smooth, green, pencil-thick cylindrical cladodes that serve as the primary photosynthetic organs (functional xerophytic adaptation).
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Foliage:</strong> Leaves are minute, linear-lanceolate, and vestigial (1–2 cm), shedding almost immediately to minimize transpirational water loss.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Inflorescence:</strong> Dense terminal clusters of tiny, yellowish-green cyathia lacking true petals.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Latex System:</strong> Extensive laticifer network containing caustic, white, resinous milky latex rich in hydrocarbons and diterpene esters.
+          </p>
+        </div>
+      </div>
+
+      <!-- 3. ECOLOGICAL SIGNIFICANCE -->
+<div class="glass-panel rounded-3xl p-5 sm:p-6 border border-emerald-900/15 space-y-4">
+  <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-2">
+    <i class="fa-solid fa-shield-halved text-emerald-700"></i> ૩. પર્યાવરણીય ભૂમિકા (Ecological Significance)
+  </h3>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <div class="bg-white/70 p-3.5 rounded-2xl border border-emerald-900/10">
+      <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs mb-2">
+        <i class="fa-solid fa-sun-plant-wilt"></i>
+      </div>
+      <strong class="text-xs text-leaf-900 block">Drought Pioneer</strong>
+      <p class="text-[11px] text-accent-earth mt-1">અત્યંત શુષ્ક જમીનમાં ટકી રણ વિસ્તરણ અટકાવે છે (Arid land reclaimer).</p>
+    </div>
+
+    <div class="bg-white/70 p-3.5 rounded-2xl border border-emerald-900/10">
+      <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs mb-2">
+        <i class="fa-solid fa-mountain"></i>
+      </div>
+      <strong class="text-xs text-leaf-900 block">Soil Stabilization</strong>
+      <p class="text-[11px] text-accent-earth mt-1">ઊંડા મૂળ રેતાળ ઢોળાવોનું ધોવાણ અટકાવી માટીનું રક્ષણ કરે છે.</p>
+    </div>
+
+    <!-- Living Bio-Fence with Working Free Shield Icon -->
+    <div class="bg-white/70 p-3.5 rounded-2xl border border-emerald-900/10">
+      <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs mb-2">
+        <i class="fa-solid fa-shield"></i>
+      </div>
+      <strong class="text-xs text-leaf-900 block">Living Bio-Fence</strong>
+      <p class="text-[11px] text-accent-earth mt-1">ઝેરી ક્ષીરરસ હોવાથી ઢોર ખાતાં નથી; કુદરતી રક્ષણાત્મક વાડ બનાવે છે.</p>
+    </div>
+  </div>
+</div>
+      <!-- 4. MEDICINAL, BIOFUEL & SAFETY -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-emerald-900/15 space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-2">
+          <i class="fa-solid fa-flask text-emerald-700"></i> ૪. ઔષધીય, વૈજ્ઞાનિક ઉપયોગ અને સાવચેતી (Medicinal, Biofuel & Safety)
+        </h3>
+
+        <div class="bg-white/60 p-4 rounded-2xl border border-emerald-900/10 space-y-2 text-xs text-leaf-900 leading-relaxed">
+          <p>
+            <strong>હાઇડ્રોકાર્બન અને બાયો-ડીઝલ સ્ત્રોત (Petro-Crop Research):</strong> નોબેલ વિજેતા વૈજ્ઞાનિક મેલ્વિન કેલ્વિન દ્વારા આ છોડને 'પેટ્રો-પ્લાન્ટ' તરીકે ઓળખાવવામાં આવ્યો હતો. તેના રસમાંથી શુદ્ધ બાયોફ્યુઅલ મેળવવા સંશોધન થયેલું છે.
+          </p>
+          <p>
+            <strong>પરંપરાગત ઉપચાર (Ethnobotanical Applications):</strong> અલ્પ માત્રામાં સ્થાનિક આયુર્વેદિક પ્રયોગોમાં મસા (warts), સોજા અને સાંધાના દુખાવામાં બાહ્ય લેપ તરીકે વપરાય છે.
+          </p>
+        </div>
+
+        <!-- Severe Toxicity Warning Box -->
+        <div class="bg-red-50/90 border-2 border-red-200 p-4 rounded-2xl text-red-950 space-y-1.5 shadow-sm">
+          <div class="flex items-center gap-2 text-red-800 font-extrabold text-xs">
+            <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+            <span>⚠️ ગંભીર ઝેરી ચેતવણી (Critical Ocular & Toxicity Hazard)</span>
+          </div>
+          <p class="text-[11.5px] leading-relaxed">
+            <strong>ગુજરાતી:</strong> ક્ષીરરસ આંખો માટે અત્યંત ઘાતક છે. આંખમાં રસ જવાથી તીવ્ર બળતરા, કેરેટાઇટિસ અને કાયમી અંધાપો આવી શકે છે. ત્વચા પર પડતાં જ ફોલ્લા પાડે છે.
+          </p>
+          <p class="text-[11px] leading-relaxed text-red-900/90 pt-1 border-t border-red-200">
+            <strong>English:</strong> Contains toxic diterpenes (ingenol & phorbol esters). Causes severe chemical dermatitis, blistering, keratoconjunctivitis, and permanent ocular injury.
+          </p>
+        </div>
+      </div>
+
+      <!-- 5. FASCINATING SCIENCE FACT -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border-l-4 border-l-emerald-600 bg-gradient-to-r from-emerald-50/50 to-white/70">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-900 flex items-center gap-2 mb-2">
+          <i class="fa-solid fa-lightbulb text-amber-500"></i> ૫. રસપ્રદ વૈજ્ઞાનિક તથ્ય (Fascinating Science Fact)
+        </h3>
+        <p class="text-xs text-leaf-900 leading-relaxed">
+          <strong>ગુજરાતી:</strong> ખરસાણી થોર પ્રતિ હેક્ટર વાર્ષિક આશરે <strong>૧૦ થી ૫૦ બેરલ ક્રૂડ ઓઇલ</strong> જેટલું જૈવિક બળતણ પેદા કરવાની ક્ષમતા ધરાવે છે!
+        </p>
+        <p class="text-[11px] text-accent-earth mt-1 leading-relaxed">
+          <strong>English:</strong> A single hectare of <em>Euphorbia tirucalli</em> can yield 10–50 barrels of refined biofuel per year, making it a frontline candidate in renewable energy research!
+        </p>
+      </div>
+
+      <!-- 6. CAMPUS GPS & QR CODE SHOWCASE -->
+<div class="glass-panel rounded-3xl p-5 sm:p-6 border border-emerald-900/15">
+  <div class="flex items-center justify-between mb-4">
+    <h4 class="text-xs font-bold uppercase tracking-wider text-leaf-900 flex items-center gap-2">
+      <i class="fa-solid fa-qrcode text-emerald-700 text-sm"></i> ૬. કેમ્પસ સ્થાન અને QR કોડ (GPS & QR Navigation)
+    </h4>
+    <span class="text-[10px] font-semibold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md">2 Live Spots</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    
+    <!-- Location 1 Card -->
+    <div class="bg-white/80 rounded-2xl p-4 border border-emerald-900/10 shadow-sm flex flex-col items-center text-center group hover:border-emerald-500/40 transition-all">
+      <div class="w-32 h-32 bg-white rounded-xl p-2 shadow-inner border border-gray-100 flex items-center justify-center relative overflow-hidden mb-3">
+        <img src="Topic_1_Loc_1.png" alt="Location 1 QR" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/9MZpoNSEhAQw2aZQ9';" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-300">
+        <div class="absolute bottom-1 right-1 bg-emerald-900/80 text-[8px] text-white font-bold px-1.5 py-0.5 rounded">Spot A</div>
+      </div>
+      <span class="text-xs font-bold text-leaf-900 block">📍 Location 1 (Main Entrance - Side A)</span>
+      <p class="text-[11px] text-accent-earth mt-0.5 mb-3">મુખ્ય પ્રવેશદ્વાર પાસે (કુંડું / સેક્શન ૧)</p>
+      <a href="https://maps.app.goo.gl/9MZpoNSEhAQw2aZQ9" target="_blank" class="w-full py-2 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition">
+        <i class="fa-solid fa-diamond-turn-right text-emerald-700"></i> Open Maps
+      </a>
+    </div>
+
+    <!-- Location 2 Card -->
+    <div class="bg-white/80 rounded-2xl p-4 border border-emerald-900/10 shadow-sm flex flex-col items-center text-center group hover:border-emerald-500/40 transition-all">
+      <div class="w-32 h-32 bg-white rounded-xl p-2 shadow-inner border border-gray-100 flex items-center justify-center relative overflow-hidden mb-3">
+        <img src="Topic_1_Loc_2.png" alt="Location 2 QR" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/uGU58FvkTxV3okyYA';" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-300">
+        <div class="absolute bottom-1 right-1 bg-emerald-900/80 text-[8px] text-white font-bold px-1.5 py-0.5 rounded">Spot B</div>
+      </div>
+      <span class="text-xs font-bold text-leaf-900 block">📍 Location 2 (Main Entrance - Side B)</span>
+      <p class="text-[11px] text-accent-earth mt-0.5 mb-3">મુખ્ય પ્રવેશદ્વાર પાસે (બાજુનું કુંડું / સેક્શન ૨)</p>
+      <a href="https://maps.app.goo.gl/uGU58FvkTxV3okyYA" target="_blank" class="w-full py-2 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 border border-emerald-200 transition">
+        <i class="fa-solid fa-diamond-turn-right text-emerald-700"></i> Open Maps
+      </a>
+    </div>
 
   </div>
-  <!-- /wrap -->
+</div>
+      <!-- Google Search Floating Card -->
+      <a href="https://www.google.com/search?q=Euphorbia+tirucalli+Kharsani+Thor+GSC+Valod" target="_blank" class="glass-panel rounded-2xl p-4 flex items-center justify-center gap-3 text-leaf-900 font-bold text-xs sm:text-sm hover:bg-white transition shadow-sm border border-accent-gold/40">
+        <i class="fa-brands fa-google text-accent-gold text-base"></i>
+        <span>ખરસાણી થોર વિશે ગૂગલ પર વધુ શોધો (Google Search)</span>
+      </a>
 
-  <!-- ════════
-         FOOTER
-         ════════ -->
-  <div class="footer">
-    <span>🌿 Government Science College, Valod</span>
-    | Green Initiative — NSS · NCC · Saptadhara · Cawach
+    </article>
+
+    <!-- ================================================================= -->
+    <!-- TOPIC 2: CALOTROPIS GIGANTEA -->
+    <!-- ================================================================= -->
+    <article id="panel-topic2" class="space-y-6 hidden">
+
+      <!-- Hero Header Card -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-7 relative overflow-hidden border-t-4 border-t-purple-600">
+        <div class="flex items-center justify-between">
+          <span class="px-3 py-1 rounded-full bg-purple-100/80 text-purple-900 text-xs font-extrabold tracking-wide inline-flex items-center gap-1.5">
+            <i class="fa-solid fa-sun text-[10px]"></i> પવિત્ર સૂર્યકાંતિ વનસ્પતિ
+          </span>
+          <span class="text-xs font-semibold text-accent-earth tracking-wide">ID: 02 &bull; Apocynaceae</span>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-leaf-900 mt-3 font-gujarati tracking-tight">
+          આંકડો <span class="text-lg sm:text-xl font-semibold text-purple-800 font-sans">(Crown Flower)</span>
+        </h2>
+        <p class="text-xs sm:text-sm font-serif italic text-accent-earth mt-1">Calotropis gigantea (L.) Dryand. &bull; Giant Milkweed &bull; Madar</p>
+
+        <!-- Feature Badges -->
+        <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-emerald-900/10">
+          <span class="px-2.5 py-1 rounded-lg bg-white/70 border border-emerald-900/10 text-[11px] font-bold text-purple-950">
+            🦋 Plain Tiger Host Plant
+          </span>
+          <span class="px-2.5 py-1 rounded-lg bg-white/70 border border-emerald-900/10 text-[11px] font-bold text-purple-950">
+            🕉️ Sacred Shiva Puja
+          </span>
+          <span class="px-2.5 py-1 rounded-lg bg-white/70 border border-emerald-900/10 text-[11px] font-bold text-purple-950">
+            ⚓ WWII Life Jacket Floss
+          </span>
+        </div>
+      </div>
+
+      <!-- Audio Player Capsule -->
+      <div class="glass-panel rounded-2xl p-4 sm:p-5 border-l-4 border-l-purple-600 shadow-sm">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-900 text-white flex items-center justify-center text-sm shadow-md">
+              <i class="fa-solid fa-headphones"></i>
+            </div>
+            <div>
+              <h3 class="text-xs sm:text-sm font-bold text-leaf-900">ઓડિયો માર્ગદર્શિકા / Voice Guide</h3>
+              <p class="text-[11px] text-accent-earth">Natural Narrative Audio Experience</p>
+            </div>
+          </div>
+          <div id="eq-t2" class="flex items-end gap-1 h-5 paused text-purple-700 px-2">
+            <div class="equalizer-bar"></div>
+            <div class="equalizer-bar"></div>
+            <div class="equalizer-bar"></div>
+            <div class="equalizer-bar"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <button onclick="playAudio('topic2_gujarati.m4a', this, 'eq-t2')" class="py-2.5 px-3 rounded-xl bg-purple-900 hover:bg-purple-950 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95">
+            <i class="fa-solid fa-play text-[10px]"></i> ગુજરાતી ઓડિયો
+          </button>
+          <button onclick="playAudio('topic2_english.m4a', this, 'eq-t2')" class="py-2.5 px-3 rounded-xl bg-white hover:bg-purple-50 text-purple-900 border border-purple-900/15 font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition active:scale-95">
+            <i class="fa-solid fa-play text-[10px]"></i> English Audio
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. TAXONOMIC HIERARCHY TABLE -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-purple-900/15">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-sitemap text-purple-700"></i> ૧. પ્રાથમિક વર્ગીકરણ વિગતો (Taxonomic Hierarchy)
+        </h3>
+        <div class="overflow-x-auto rounded-2xl border border-purple-900/10">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-purple-900/5 text-purple-950 uppercase font-bold text-[10.5px]">
+              <tr>
+                <th class="p-3 border-b border-purple-900/10">પ્રમાણભૂત વિગત (Parameter)</th>
+                <th class="p-3 border-b border-purple-900/10">ગુજરાતી વિગત</th>
+                <th class="p-3 border-b border-purple-900/10">English Scientific Details</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-purple-900/5 bg-white/40">
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">સામાન્ય નામ (Common Name)</td>
+                <td class="p-3 text-leaf-900">આંકડો, શ્વેતાર્ક, મદાર</td>
+                <td class="p-3 text-leaf-900">Crown Flower, Giant Milkweed, Bowstring Hemp</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">વૈજ્ઞાનિક નામ (Scientific Name)</td>
+                <td class="p-3 font-serif italic text-purple-900">Calotropis gigantea (L.) Dryand.</td>
+                <td class="p-3 font-serif italic text-purple-900">Calotropis gigantea (L.) Dryand.</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">વનસ્પતિ કુટુંબ (Family)</td>
+                <td class="p-3 text-leaf-900">એસ્ક્લેપિયાડેસી / એપોસાયનેસી</td>
+                <td class="p-3 text-leaf-900">Apocynaceae (Subfamily: Asclepiadoideae)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">છોડ સ્વરૂપ (Plant Habit)</td>
+                <td class="p-3 text-leaf-900">બારમાસી મોટી કાષ્ઠીય ક્ષુપ</td>
+                <td class="p-3 text-leaf-900">Perennial Laticiferous Shrub</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">મૂળ વતન (Native Region)</td>
+                <td class="p-3 text-leaf-900">ભારત, શ્રીલંકા, દક્ષિણ-પૂર્વ એશિયા</td>
+                <td class="p-3 text-leaf-900">Tropical Indian Subcontinent & SE Asia</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-leaf-900">પુષ્પકાળ (Flowering Season)</td>
+                <td class="p-3 text-leaf-900">સર્વ ઋતુ (મુખ્યત્વે ઉનાળો-ચોમાસું)</td>
+                <td class="p-3 text-leaf-900">Year-Round (Peak: December to July)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2. DETAILED BOTANICAL MORPHOLOGY -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-purple-900/15 space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-2">
+          <i class="fa-solid fa-seedling text-purple-700"></i> ૨. વિગતવાર વનસ્પતિશાસ્ત્રીય વર્ણન (Botanical Morphology)
+        </h3>
+
+        <!-- Gujarati Description -->
+        <div class="bg-white/60 p-4 rounded-2xl border border-purple-900/10 space-y-2.5">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-900 flex items-center gap-1.5">
+            <i class="fa-solid fa-language"></i> ગુજરાતી વર્ણન
+          </span>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>પ્રકાંડ અને ક્ષીરરસ (Stems & Latex):</strong> ૨ થી ૪ મીટર ઊંચો કાષ્ઠીય ક્ષુપ. તેના પ્રકાંડ પર ભૂખરી-સફેદ છાલ અને સમગ્ર વનસ્પતિમાં ઘટ્ટ દૂધિયો ઝેરી ક્ષીરરસ (Milky Latex) હોય છે.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>પર્ણો (Leaves):</strong> સંમુખ ગોઠવાયેલા, મોટા (૧૦–૨૦ સે.મી.), અંડાકાર-લંબગોળ, જાડા, દળદાર અને નીચેની સપાટીએ સફેદ રૂંવાટીવાળા (Woolly Tomentum) હોય છે.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>પુષ્પો (Flowers):</strong> અત્યંત આકર્ષક, મીણ જેવા, ૫-પાંખડીવાળા તારાકાર પુષ્પો. તેની મધ્યમાં મુગટ જેવો વિશિષ્ટ કોરોના (Corona / Crown) આવેલો હોય છે. પુષ્પો આછા જાંબલી અથવા દુર્લભ સફેદ (શ્વેતાર્ક) હોય છે.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>ફળ અને બીજ (Fruits & Seeds):</strong> ફળ વળાંકવાળા મોટા ફોલિકલ (Pod) હોય છે. પાકતાં તે ખુલે છે અને રેશમી સફેદ વાળ (Comose Silk Floss) ધરાવતા અસંખ્ય બીજ પવન દ્વારા દૂર સુધી ઊડી જાય છે.
+          </p>
+        </div>
+
+        <!-- English Description -->
+        <div class="bg-purple-950/[0.03] p-4 rounded-2xl border border-purple-900/10 space-y-2.5">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-globe"></i> English Botanical Morphology
+          </span>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Habit & Stem:</strong> Stout, laticiferous shrub (2–4 m) with a yellowish-grey furrowed corky bark and copious cardiac-active milky latex.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Leaves:</strong> Opposite-decussate, sessile/amplexicaul, broadly obovate-oblong, thick, with a glaucous-green upper surface and dense white-tomentose undersides.
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Inflorescence & Flower Structure:</strong> Lateral umbellate cymes; flowers are waxy, pentamerous, featuring a prominent 5-lobed central staminal corona (crown). Color variants include pale lilac/purple and rare pure white (Swetark).
+          </p>
+          <p class="text-xs text-leaf-900 leading-relaxed">
+            <strong>Fruit & Dispersal:</strong> Green recurved follicles releasing flat brown seeds attached to silvery, silk-like coma hairs adapted for anemochory (wind dispersal).
+          </p>
+        </div>
+      </div>
+
+     <!-- 3. ECOLOGICAL SIGNIFICANCE -->
+<div class="glass-panel rounded-3xl p-5 sm:p-6 border border-purple-900/15 space-y-4">
+  <h3 class="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-2">
+    <i class="fa-solid fa-shield-halved text-purple-700"></i> ૩. પર્યાવરણીય ભૂમિકા (Ecological Significance)
+  </h3>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <!-- Card 1: Butterfly Ecosystem -->
+    <div class="bg-white/70 p-3.5 rounded-2xl border border-purple-900/10">
+      <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-900 flex items-center justify-center text-xs mb-2">
+        <!-- Option A: Inline SVG for exact Butterfly look -->
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <path d="M12 4.5C11.5 3 9.5 2 7 2C3.5 2 2 5 2 8.5C2 13 6 16.5 11 20.5V22H13V20.5C18 16.5 22 13 22 8.5C22 5 20.5 2 17 2C14.5 2 12.5 3 12 4.5Z" opacity="0.2"/>
+          <path d="M12 6c-.6 0-1 .4-1 1v10c0 .6.4 1 1 1s1-.4 1-1V7c0-.6-.4-1-1-1zm-2-2.5C8 2.5 5 3.5 3.5 6 2 8.5 2.5 12 5 14.5c2 2 4.5 3.5 5 4V16c-1.5-.8-3.5-2.2-4-4-.6-2.2.5-4.5 2-5 1.2-.4 2 .5 2 1.5v-5zm4 0v5c0-1 .8-1.9 2-1.5 1.5.5 2.6 2.8 2 5-.5 1.8-2.5 3.2-4 4v2.5c.5-.5 3-2 5-4 2.5-2.5 3-6 1.5-8.5C19 3.5 16 2.5 14 3.5z"/>
+        </svg>
+      </div>
+      <strong class="text-xs text-leaf-900 block">Butterfly Ecosystem</strong>
+      <p class="text-[11px] text-accent-earth mt-1">'પ્લેઇન ટાઇગર' પતંગિયા (Danaus chrysippus) નું મુખ્ય એકમાત્ર હોસ્ટ પ્લાન્ટ છે.</p>
+    </div>
+
+    <!-- Card 2: Pollination Hub -->
+    <div class="bg-white/70 p-3.5 rounded-2xl border border-purple-900/10">
+      <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-900 flex items-center justify-center text-xs mb-2">
+        <i class="fa-solid fa-bug"></i>
+      </div>
+      <strong class="text-xs text-leaf-900 block">Pollination Hub</strong>
+      <p class="text-[11px] text-accent-earth mt-1">મોટા ભમરા (Xylocopa) અને મધમાખીઓને આકર્ષી જૈવવિવિધતા જાળવે છે.</p>
+    </div>
+
+    <!-- Card 3: Wasteland Reclaimer -->
+    <div class="bg-white/70 p-3.5 rounded-2xl border border-purple-900/10">
+      <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-900 flex items-center justify-center text-xs mb-2">
+        <i class="fa-solid fa-seedling"></i>
+      </div>
+      <strong class="text-xs text-leaf-900 block">Wasteland Reclaimer</strong>
+      <p class="text-[11px] text-accent-earth mt-1">ક્ષારીય અને સૂકી જમીનમાં પણ ટકી હરિયાળું કવચ પૂરું પાડે છે.</p>
+    </div>
   </div>
+</div>
 
-<script>
-    function show(id, btn) {
-      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      if (btn) {
-        btn.classList.add("active");
+
+      <!-- 4. MEDICINAL & CULTURAL SIGNIFICANCE -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-purple-900/15 space-y-4">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-2">
+          <i class="fa-solid fa-om text-purple-700"></i> ૪. ઔષધીય અને સાંસ્કૃતિક મહત્વ (Medicinal & Cultural Heritage)
+        </h3>
+
+        <div class="bg-white/60 p-4 rounded-2xl border border-purple-900/10 space-y-2 text-xs text-leaf-900 leading-relaxed">
+          <p>
+            <strong>મુખ્ય રાસાયણિક ઘટકો (Bioactive Phytochemistry):</strong> કેલોટ્રોપિન (Calotropin), કેલેક્ટિન અને ఉઝારીજેનિન જેવા શક્તિશાળી કાર્ડિયાક ગ્લાયકોસાઇડ્સ (Cardiac Glycosides) રહેલા છે.
+          </p>
+          <p>
+            <strong>આયુર્વેદિક ઉપચાર (Ayurvedic Poultice):</strong> આંકડાના પાન પર એરંડિયું (દીવેલ) ચોપડી ગરમ કરીને બાંધવાથી સંધિવા (Arthritis), સાંધાના સોજા અને સ્નાયુઓની જકડનમાં ચમત્કારિક રાહત મળે છે.
+          </p>
+          <p>
+            <strong>ધાર્મિક અને આધ્યાત્મિક મહત્વ (Sacred Worship):</strong> હિન્દુ ધર્મમાં આંકડો સૂર્ય દેવતા ("અર્ક") અને ભગવાન શિવને અતિ પ્રિય છે. મહાશિવરાત્રિએ પુષ્પો શિવલિંગ પર તથા હનુમાનજીને માળા ચડાવવામાં આવે છે. સફેદ આંકડાના મૂળમાંથી 'શ્વેતાર્ક ગણેશ' બનાવાય છે.
+          </p>
+        </div>
+      </div>
+
+      <!-- 5. HISTORICAL & SCIENCE FUN FACT -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border-l-4 border-l-purple-600 bg-gradient-to-r from-purple-50/50 to-white/70">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-2 mb-2">
+          <i class="fa-solid fa-life-ring text-purple-700"></i> ૫. રસપ્રદ ઐતિહાસિક તથ્ય (Historical & Science Fun Fact)
+        </h3>
+        <p class="text-xs text-leaf-900 leading-relaxed">
+          <strong>ગુજરાતી:</strong> બીજા વિશ્વયુદ્ધ (WWII) દરમિયાન સૈનિકોના <strong>લાઇફ જેકેટ (Life Jackets)</strong> અને અવાહક લાઇનિંગ બનાવવા માટે આંકડાના બીજના રેશમી રેસા (Floss) નો ઉપયોગ વોટરપ્રૂફ મટિરિયલ તરીકે કરવામાં આવ્યો હતો!
+        </p>
+        <p class="text-[11px] text-accent-earth mt-1 leading-relaxed">
+          <strong>English:</strong> During World War II, the silky hydrophobic fibers (floss) harvested from <em>Calotropis</em> seed pods were widely used as buoyant, waterproof filling in military life jackets and aircraft insulation!
+        </p>
+      </div>
+
+      <!-- 6. CAMPUS GPS & QR CODE SHOWCASE -->
+      <!-- CAMPUS GPS & QR CODE SHOWCASE -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-6 border border-purple-900/15">
+        <div class="flex items-center justify-between mb-4">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-purple-950 flex items-center gap-2">
+            <i class="fa-solid fa-qrcode text-purple-700 text-sm"></i> ૬. કેમ્પસ સ્થાન અને QR કોડ (GPS & QR Navigation)
+          </h4>
+          <span class="text-[10px] font-semibold text-purple-800 bg-purple-100/80 px-2 py-0.5 rounded-md">2 Live Spots</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <!-- Location 1 Card (Canteen Border) -->
+          <div class="bg-white/80 rounded-2xl p-4 border border-purple-900/10 shadow-sm flex flex-col items-center text-center group hover:border-purple-500/40 transition-all">
+            <div class="w-32 h-32 bg-white rounded-xl p-2 shadow-inner border border-gray-100 flex items-center justify-center relative overflow-hidden mb-3">
+              <img src="Topic_2_Loc_1.png" alt="Topic 2 Location 1 QR" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/4Fbd1hayuFS2Qz378';" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-1 right-1 bg-purple-900/80 text-[8px] text-white font-bold px-1.5 py-0.5 rounded">Spot A</div>
+            </div>
+            <span class="text-xs font-bold text-purple-950 block">📍 Location 1 (Canteen Border)</span>
+            <p class="text-[11px] text-accent-earth mt-0.5 mb-3">કેન્ટીન સરહદ સેક્શન (Near Canteen)</p>
+            <a href="https://maps.app.goo.gl/4Fbd1hayuFS2Qz378" target="_blank" class="w-full py-2 px-3 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold text-xs flex items-center justify-center gap-1.5 border border-purple-200 transition">
+              <i class="fa-solid fa-diamond-turn-right text-purple-700"></i> Open Maps
+            </a>
+          </div>
+
+          <!-- Location 2 Card (Playground Central Border) -->
+          <div class="bg-white/80 rounded-2xl p-4 border border-purple-900/10 shadow-sm flex flex-col items-center text-center group hover:border-purple-500/40 transition-all">
+            <div class="w-32 h-32 bg-white rounded-xl p-2 shadow-inner border border-gray-100 flex items-center justify-center relative overflow-hidden mb-3">
+              <img src="Topic_2_Loc_2.png" alt="Topic 2 Location 2 QR" onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/8GLHDDwmi97XY5ZG8';" class="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-300">
+              <div class="absolute bottom-1 right-1 bg-purple-900/80 text-[8px] text-white font-bold px-1.5 py-0.5 rounded">Spot B</div>
+            </div>
+            <span class="text-xs font-bold text-purple-950 block">📍 Location 2 (Playground Boundary)</span>
+            <p class="text-[11px] text-accent-earth mt-0.5 mb-3">પ્લેગ્રાઉન્ડ બોર્ડર — મધ્ય ભાગ (Central Ground)</p>
+            <a href="https://maps.app.goo.gl/8GLHDDwmi97XY5ZG8" target="_blank" class="w-full py-2 px-3 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 font-bold text-xs flex items-center justify-center gap-1.5 border border-purple-200 transition">
+              <i class="fa-solid fa-diamond-turn-right text-purple-700"></i> Open Maps
+            </a>
+          </div>
+
+        </div>
+      </div>
+	  
+      <!-- Google Search Floating Card -->
+      <a href="https://www.google.com/search?sca_esv=3715172283c963bb&sxsrf=APpeQnsWW1fJWdusIPSxKiwR_XpeOa-3GA:1788521298198&q=Calotropis+gigantea+Akdo+GSC+Valod&spell=1&sa=X&ved=2ahUKEwj4yZuF6dSWAxW_TWwGHWGsIm8QBSgAegQIDhAB&biw=1602&bih=749&dpr=1.2" target="_blank" class="glass-panel rounded-2xl p-4 flex items-center justify-center gap-3 text-purple-950 font-bold text-xs sm:text-sm hover:bg-white transition shadow-sm border border-purple-300">
+        <i class="fa-brands fa-google text-accent-gold text-base"></i>
+        <span>આંકડા વિશે ગૂગલ પર વધુ શોધો (Google Search)</span>
+      </a>
+
+    </article>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-6 text-xs text-accent-earth border-t border-emerald-900/10">
+    <p>&copy; 2026 <strong>Government Science College, Valod</strong> &bull; Eco Club &amp; Green Initiative</p>
+  </footer>
+
+  <!-- SCRIPT CONTROLLER -->
+  <script>
+    let activeAudio = null;
+    let activeBtn = null;
+    let activeEq = null;
+
+    function playAudio(src, btn, eqId) {
+      const eq = document.getElementById(eqId);
+
+      if (activeAudio && !activeAudio.paused && activeAudio.src.includes(src)) {
+        activeAudio.pause();
+        eq.classList.add('paused');
+        btn.innerHTML = btn.innerHTML.replace('fa-pause', 'fa-play').replace('સ્ટોપ', '').replace(' Pause', '');
+        return;
       }
-      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      if (activeAudio) {
+        activeAudio.pause();
+        if (activeBtn) {
+          activeBtn.innerHTML = activeBtn.innerHTML.replace('fa-pause', 'fa-play').replace('સ્ટોપ', '').replace('Pause', '');
+        }
+        if (activeEq) activeEq.classList.add('paused');
+      }
+
+      activeAudio = new Audio(src);
+      activeBtn = btn;
+      activeEq = eq;
+
+      const isGuj = src.includes('gujarati');
+      btn.innerHTML = isGuj ? '<i class="fa-solid fa-pause text-[10px]"></i> સ્ટોપ' : '<i class="fa-solid fa-pause text-[10px]"></i> Pause';
+      eq.classList.remove('paused');
+
+      activeAudio.play().catch(e => {
+        alert("Audio play nahi ho saki! Make sure audio files are placed in the same folder.");
+        eq.classList.add('paused');
+        btn.innerHTML = isGuj ? '<i class="fa-solid fa-play text-[10px]"></i> ગુજરાતી ઓડિયો' : '<i class="fa-solid fa-play text-[10px]"></i> English Audio';
+      });
+
+      activeAudio.onended = () => {
+        eq.classList.add('paused');
+        btn.innerHTML = isGuj ? '<i class="fa-solid fa-play text-[10px]"></i> ગુજરાતી ઓડિયો' : '<i class="fa-solid fa-play text-[10px]"></i> English Audio';
+      };
     }
 
-    // URL Hash ke hisab se automatic tab open karne ke liye
-    window.addEventListener("DOMContentLoaded", () => {
-      const hash = window.location.hash.replace('#', '');
-      const tabs = document.querySelectorAll(".tab");
-      
-      if (hash === 'p2' || hash === 'aakado') {
-        show('p2', tabs[1]);
+    function switchTab(topicKey, btn) {
+      if (activeAudio) {
+        activeAudio.pause();
+        if (activeEq) activeEq.classList.add('paused');
+      }
+
+      const p1 = document.getElementById('panel-topic1');
+      const p2 = document.getElementById('panel-topic2');
+      const b1 = document.getElementById('tab-btn-1');
+      const b2 = document.getElementById('tab-btn-2');
+
+      if (topicKey === 'topic1') {
+        p1.classList.remove('hidden');
+        p2.classList.add('hidden');
+        b1.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-leaf-900 bg-white shadow-md flex items-center justify-center gap-2 transition-all duration-300';
+        b2.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-gray-500 hover:text-leaf-900 flex items-center justify-center gap-2 transition-all duration-300';
+        window.location.hash = 'p1';
       } else {
-        show('p1', tabs[0]);
+        p1.classList.add('hidden');
+        p2.classList.remove('hidden');
+        b2.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-leaf-900 bg-white shadow-md flex items-center justify-center gap-2 transition-all duration-300';
+        b1.className = 'flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-gray-500 hover:text-leaf-900 flex items-center justify-center gap-2 transition-all duration-300';
+        window.location.hash = 'p2';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash === 'p2' || hash === 'topic2' || hash === 'aakado') {
+        switchTab('topic2', document.getElementById('tab-btn-2'));
+      } else {
+        switchTab('topic1', document.getElementById('tab-btn-1'));
       }
     });
   </script>
-
 </body>
-
 </html>
